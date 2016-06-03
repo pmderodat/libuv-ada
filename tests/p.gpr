@@ -1,0 +1,14 @@
+with "../uv";
+
+project P is
+
+   for Languages use ("Ada");
+   for Source_Dirs use (".");
+   for Object_Dir use "obj";
+   for Main use ("empty_loop.adb");
+
+   package Linker is
+      for Default_Switches ("Ada") use ("-luv");
+   end Linker;
+
+end P;

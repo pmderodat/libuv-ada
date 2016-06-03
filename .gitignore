@@ -1,0 +1,5 @@
+obj
+lib
+tmp
+gentools/bind-enums.so
+tests/obj

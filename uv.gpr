@@ -1,0 +1,14 @@
+library project UV is
+
+   type Library_Type_Type is ("static", "relocatable");
+   Library_Type : Library_Type_Type := external ("LIBRARY_TYPE", "static");
+
+   for Languages use ("Ada");
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Library_Dir use "lib";
+
+   for Library_Name use "uv_ada";
+   for Library_Kind use Library_Type;
+
+end UV;
