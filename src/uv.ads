@@ -39,6 +39,17 @@ package UV is
       File)
       with Convention => C;
 
+   type Req_Type (<>) is limited private;
+   type Req_Access is access Req_Type;
+   --  The base libuv request structure
+
+   type Req_Data_Type is new System.Address;
+
+   type Req_Kind is
+     (Unknown_Req, Req, Connect, Write, Shutdown, UDP_Send, FS, Work,
+      GetAddrInfo, GetNameInfo)
+      with Convention => C;
+
    type Buf_T is record
       Base : System.Address;
       Len  : Interfaces.C.size_t;
@@ -184,6 +195,35 @@ package UV is
            External_Name => "uv_handle_size";
    --  Return the size of the given handle type
 
+   ---------------------------
+   -- Base request handling --
+   ---------------------------
+
+   function Get_Kind (R : Req_Access) return Req_Kind
+      with Inline_Always;
+   --  Return the kind of request
+
+   function Get_Data (R : Req_Access) return Req_Data_Type
+      with Inline_Always;
+   --  Return the user-defined arbitrary data stored in the R request
+
+   procedure Set_Data (R : Req_Access; D : Req_Data_Type)
+      with Inline_Always;
+   --  Initialize the user-defined arbitrary data stored in the R request to D
+
+   function Cancel (R : Req_Access) return Errno_T
+      with Import        => True,
+           Convention    => C,
+           External_Name => "uv_cancel";
+   --  Cancel a pending request. Fails if the request is executing or has
+   --  finished executing.
+
+   function Req_Size (K : Req_Kind) return Interfaces.C.size_t
+      with Import        => True,
+           Convention    => C,
+           External_Name => "uv_req_size";
+   --  Return the size of the given request type
+
 private
 
    type Handle_Type is limited record
@@ -193,6 +233,14 @@ private
       with Convention => C;
    --  This is an incomplete view of the uv_handle_s structure that exposes
    --  only the fields we need.
+
+   type Req_Type is limited record
+      Data : Req_Data_Type;
+      Kind : Req_Kind;
+   end record
+      with Convention => C;
+   --  This is an incomplete view of the uv_req_s structure that exposes only
+   --  the fields we need.
 
    type Loop_Type is new System.Address;
 

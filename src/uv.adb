@@ -204,4 +204,35 @@ package body UV is
       return Interfaces.C."/=" (Has_Ref (H), 0);
    end Has_Ref;
 
+   ---------------------------
+   -- Base request handling --
+   ---------------------------
+
+   --------------
+   -- Get_Kind --
+   --------------
+
+   function Get_Kind (R : Req_Access) return Req_Kind is
+   begin
+      return R.Kind;
+   end Get_Kind;
+
+   --------------
+   -- Get_Data --
+   --------------
+
+   function Get_Data (R : Req_Access) return Req_Data_Type is
+   begin
+      return R.Data;
+   end Get_Data;
+
+   --------------
+   -- Set_Data --
+   --------------
+
+   procedure Set_Data (R : Req_Access; D : Req_Data_Type) is
+   begin
+      R.Data := D;
+   end Set_Data;
+
 end UV;
