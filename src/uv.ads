@@ -33,6 +33,13 @@ package UV is
 
    type Loop_Data_Type is new System.Address;
 
+   type Buf_T is record
+      Base : System.Address;
+      Len  : Interfaces.C.size_t;
+   end record
+      with Convention => C_Pass_By_Copy;
+   type Buf_Access is access Buf_T;
+
    function Alloc return Loop_Type;
    --  Allocate and return a new loop
 
