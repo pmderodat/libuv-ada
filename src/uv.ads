@@ -224,6 +224,36 @@ package UV is
            External_Name => "uv_req_size";
    --  Return the size of the given request type
 
+   -----------------
+   -- Idle handle --
+   -----------------
+
+   type Idle_Handle is limited private;
+   type Idle_Handle_Access is access Idle_Handle;
+   --  Idle handle type
+
+   type Idle_Cb is access procedure (Idle : Idle_Handle_Access)
+      with Convention => C;
+   --  Callback passed to Idle_Start
+
+   function Idle_Init (L : Loop_Type; Idle : Idle_Handle) return Errno_T
+      with Import => True,
+           Convention => C,
+           External_Name => "uv_idle_init";
+   --  Initialize the handle
+
+   function Idle_Start (Idle : Idle_Handle; Cb : Idle_Cb) return Errno_T
+      with Import => True,
+           Convention => C,
+           External_Name => "uv_idle_start";
+   --  Start the handle with the given callback
+
+   function Idle_Stop (Idle : Idle_Handle) return Errno_T
+      with Import => True,
+           Convention => C,
+           External_Name => "uv_idle_stop";
+   --  Stop the handle, the callback will no longer be called
+
 private
 
    type Handle_Type is limited record
@@ -245,5 +275,19 @@ private
    type Loop_Type is new System.Address;
 
    No_Loop : constant Loop_Type := Loop_Type (System.Null_Address);
+
+   type Padding_Type is array (Interfaces.C.size_t range <>)
+                        of Interfaces.Unsigned_8
+      with Pack => True;
+
+   --  %uv_handle_sizes
+   --  Post-processing will replace the following with actual sizes
+   Dummy_Handle_Size : constant Interfaces.C.size_t := 1024;
+   Idle_Handle_Size : constant Interfaces.C.size_t := Dummy_Handle_Size;
+   --  %end
+
+   type Idle_Handle is limited record
+      Bytes : Padding_Type (1 .. Idle_Handle_Size);
+   end record;
 
 end UV;
