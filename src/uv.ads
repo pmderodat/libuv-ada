@@ -3,6 +3,10 @@ with Interfaces.C;
 
 with System;
 
+--  Unless rare exceptions, all types and subprograms exposed in this package
+--  bind a corresponding C entity. For extra details, please refer to libuv's
+--  own documentation: <http://docs.libuv.org/>.
+
 package UV is
 
    --  %uv_errno_t
