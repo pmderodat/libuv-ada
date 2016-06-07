@@ -4,6 +4,10 @@ with System.Memory;
 
 package body UV is
 
+   -------------------
+   -- Loop handling --
+   -------------------
+
    type Loop_Data_Access is access Loop_Data_Type;
 
    function Get_Data_Access is new Ada.Unchecked_Conversion
@@ -126,5 +130,78 @@ package body UV is
    begin
       Walk (L, Walk_Cb_Wrapper'Access, Cb);
    end Walk;
+
+   -------------------------
+   -- Base handle support --
+   -------------------------
+
+   function Is_Active (H : Handle_Access) return Interfaces.C.int
+      with Import        => True,
+           Convention    => C,
+           External_Name => "uv_is_active";
+
+   function Is_Closing (H : Handle_Access) return Interfaces.C.int
+      with Import        => True,
+           Convention    => C,
+           External_Name => "uv_is_closing";
+
+   function Has_Ref (H : Handle_Access) return Interfaces.C.int
+      with Import        => True,
+           Convention    => C,
+           External_Name => "uv_has_ref";
+
+   --------------
+   -- Get_Loop --
+   --------------
+
+   function Get_Loop (H : Handle_Access) return Loop_Type is
+   begin
+      return H.UV_Loop;
+   end Get_Loop;
+
+   --------------
+   -- Get_Data --
+   --------------
+
+   function Get_Data (H : Handle_Access) return Handle_Data_Type is
+   begin
+      return H.Data;
+   end Get_Data;
+
+   --------------
+   -- Set_Data --
+   --------------
+
+   procedure Set_Data (H : Handle_Access; D : Handle_Data_Type) is
+   begin
+      H.Data := D;
+   end Set_Data;
+
+   ---------------
+   -- Is_Active --
+   ---------------
+
+   function Is_Active (H : Handle_Access) return Boolean is
+   begin
+      return Interfaces.C."/=" (Is_Active (H), 0);
+   end Is_Active;
+
+   ----------------
+   -- Is_Closing --
+   ----------------
+
+   function Is_Closing (H : Handle_Access) return Boolean is
+   begin
+      return Interfaces.C."/=" (Is_Closing (H), 0);
+   end Is_Closing;
+
+   -------------
+   -- Has_Ref --
+   -------------
+
+   function Has_Ref (H : Handle_Access) return Boolean is
+   begin
+      return Interfaces.C."/=" (Has_Ref (H), 0);
+   end Has_Ref;
 
 end UV;
