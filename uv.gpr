@@ -11,4 +11,8 @@ library project UV is
    for Library_Name use "uv_ada";
    for Library_Kind use Library_Type;
 
+   package Compiler is
+      for Default_Switches ("Ada") use ("-gnat12", "-gnatwae", "-gnatyg");
+   end Compiler;
+
 end UV;
