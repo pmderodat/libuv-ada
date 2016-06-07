@@ -16,7 +16,7 @@ package UV is
    for Errno_T use (Some_Error => -1, OK => 0);
    --  %end
 
-   type Handle_Type is private;
+   type Handle_Type (<>) is limited private;
    type Handle_Access is access Handle_Type;
    --  The base libuv handle type
 
@@ -106,7 +106,7 @@ package UV is
 
 private
 
-   type Handle_Type is null record;
+   type Handle_Type is limited null record;
    --  TODO???
 
    type Loop_Type is new System.Address;
