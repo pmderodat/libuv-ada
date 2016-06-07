@@ -10,8 +10,10 @@ with System;
 package UV is
 
    --  %uv_errno_t
-   type Errno_T is (OK)
+   --  Post-processing will replace this with real errno codes
+   type Errno_T is (Some_Error, OK)
       with Convention => C;
+   for Errno_T use (Some_Error => -1, OK => 0);
    --  %end
 
    type Handle_Type is private;
