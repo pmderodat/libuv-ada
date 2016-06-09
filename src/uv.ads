@@ -1,3 +1,5 @@
+with Ada.Unchecked_Conversion;
+
 with Interfaces;
 with Interfaces.C;
 
@@ -231,6 +233,10 @@ package UV is
    type Idle_Handle is limited private;
    type Idle_Handle_Access is access Idle_Handle;
    --  Idle handle type
+
+   function As_Handle is new Ada.Unchecked_Conversion
+     (Idle_Handle_Access, Handle_Access);
+   --  Get a generic handle reference out of an idle handle
 
    type Idle_Cb is access procedure (Idle : Idle_Handle_Access)
       with Convention => C;
