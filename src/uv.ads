@@ -236,19 +236,19 @@ package UV is
       with Convention => C;
    --  Callback passed to Idle_Start
 
-   function Idle_Init (L : Loop_Type; Idle : Idle_Handle) return Errno_T
+   function Idle_Init (L : Loop_Type; Idle : Idle_Handle_Access) return Errno_T
       with Import => True,
            Convention => C,
            External_Name => "uv_idle_init";
    --  Initialize the handle
 
-   function Idle_Start (Idle : Idle_Handle; Cb : Idle_Cb) return Errno_T
+   function Idle_Start (Idle : Idle_Handle_Access; Cb : Idle_Cb) return Errno_T
       with Import => True,
            Convention => C,
            External_Name => "uv_idle_start";
    --  Start the handle with the given callback
 
-   function Idle_Stop (Idle : Idle_Handle) return Errno_T
+   function Idle_Stop (Idle : Idle_Handle_Access) return Errno_T
       with Import => True,
            Convention => C,
            External_Name => "uv_idle_stop";
