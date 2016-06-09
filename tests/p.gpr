@@ -5,7 +5,7 @@ project P is
    for Languages use ("Ada");
    for Source_Dirs use (".");
    for Object_Dir use "obj";
-   for Main use ("empty_loop.adb");
+   for Main use ("empty_loop.adb", "idle_simple.adb");
 
    package Linker is
       for Default_Switches ("Ada") use ("-luv");
