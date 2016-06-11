@@ -292,7 +292,7 @@ private
    --  %uv_handle_sizes
    --  Post-processing will replace the following with actual sizes
    Dummy_Handle_Size : constant Interfaces.C.size_t := 1024;
-   Idle_Handle_Size : constant Interfaces.C.size_t := Dummy_Handle_Size;
+   Idle_Handle_Size  : constant Interfaces.C.size_t := Dummy_Handle_Size;
    --  %end
 
    type Idle_Handle is limited record

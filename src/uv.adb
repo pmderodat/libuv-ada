@@ -235,6 +235,10 @@ package body UV is
       R.Data := D;
    end Set_Data;
 
+   -----------------
+   -- Idle handle --
+   -----------------
+
    -------------
    -- Destroy --
    -------------
