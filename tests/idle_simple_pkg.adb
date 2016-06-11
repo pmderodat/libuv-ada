@@ -51,6 +51,7 @@ package body Idle_Simple_Pkg is
       Put_Line ("Loop finished");
 
       Expect_OK (UV.Close (L));
+      UV.Destroy (I);
    end Main;
 
 end Idle_Simple_Pkg;

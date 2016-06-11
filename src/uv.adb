@@ -1,3 +1,5 @@
+with Ada.Unchecked_Deallocation;
+
 with System.Memory;
 
 package body UV is
@@ -232,5 +234,17 @@ package body UV is
    begin
       R.Data := D;
    end Set_Data;
+
+   -------------
+   -- Destroy --
+   -------------
+
+   procedure Destroy (Idle : in out Idle_Handle_Access)
+   is
+      procedure Destroy is new Ada.Unchecked_Deallocation
+        (Idle_Handle, Idle_Handle_Access);
+   begin
+      Destroy (Idle);
+   end Destroy;
 
 end UV;

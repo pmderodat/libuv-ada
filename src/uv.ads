@@ -234,6 +234,9 @@ package UV is
    type Idle_Handle_Access is access Idle_Handle;
    --  Idle handle type
 
+   procedure Destroy (Idle : in out Idle_Handle_Access)
+      with Inline_Always;
+
    function As_Handle is new Ada.Unchecked_Conversion
      (Idle_Handle_Access, Handle_Access);
    --  Get a generic handle reference out of an idle handle
